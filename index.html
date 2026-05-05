@@ -260,6 +260,196 @@
     }
     footer a:hover { color: var(--ink); border-color: var(--ink); }
 
+    /* ── NAV TABS ── */
+    .nav-tabs {
+      display: flex;
+      gap: 0;
+      margin-left: 2rem;
+    }
+    .nav-tab {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 400;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0 1.2rem;
+      height: 64px;
+      border-bottom: 1.5px solid transparent;
+      transition: all 0.18s;
+    }
+    .nav-tab:hover { color: var(--ink); }
+    .nav-tab.active { color: var(--ink); border-bottom-color: var(--ink); }
+
+    /* ── PAGE SECTIONS ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── MOODBOARD ── */
+    .mb-wrap {
+      padding: 3rem;
+      display: flex;
+      gap: 2rem;
+      align-items: flex-start;
+    }
+    @media(max-width:900px){ .mb-wrap { flex-direction: column; padding: 1.5rem; } }
+
+    .mb-sidebar {
+      width: 220px;
+      flex-shrink: 0;
+    }
+    .mb-sidebar-title {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-muted);
+      margin-bottom: 1rem;
+    }
+    .mb-room-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      margin-bottom: 1.5rem;
+    }
+    .mb-room-btn {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 10px 6px;
+      border: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      text-align: center;
+    }
+    .mb-room-btn:hover { border-color: var(--ink-faint); color: var(--ink); }
+    .mb-room-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+    .mb-pieces-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      max-height: 480px;
+      overflow-y: auto;
+    }
+    .mb-piece-thumb {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px;
+      border: 0.5px solid var(--border);
+      cursor: grab;
+      transition: border-color 0.15s;
+      background: var(--paper);
+    }
+    .mb-piece-thumb:hover { border-color: var(--ink-faint); }
+    .mb-piece-thumb img {
+      width: 44px;
+      height: 44px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+    .mb-piece-thumb span {
+      font-family: var(--serif);
+      font-size: 13px;
+      line-height: 1.3;
+      color: var(--ink);
+    }
+
+    .mb-canvas-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .mb-canvas-actions {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+    .mb-btn {
+      font-family: var(--sans);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 16px;
+      border: 0.5px solid var(--border);
+      background: transparent;
+      color: var(--ink-muted);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+    .mb-btn:hover { border-color: var(--ink-faint); color: var(--ink); }
+    .mb-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+    #mb-canvas {
+      width: 100%;
+      aspect-ratio: 4/3;
+      position: relative;
+      overflow: hidden;
+      border: 0.5px solid var(--border);
+      background: var(--paper-warm);
+    }
+    .mb-canvas-hint {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--serif);
+      font-size: 18px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--ink-faint);
+      pointer-events: none;
+    }
+    .mb-item {
+      position: absolute;
+      cursor: move;
+      user-select: none;
+      border: 1.5px solid transparent;
+    }
+    .mb-item:hover, .mb-item.selected { border-color: var(--ink-faint); }
+    .mb-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+    .mb-item-del {
+      position: absolute;
+      top: -10px;
+      right: -10px;
+      width: 20px;
+      height: 20px;
+      background: var(--ink);
+      color: var(--paper);
+      border: none;
+      border-radius: 50%;
+      font-size: 11px;
+      cursor: pointer;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+    .mb-item.selected .mb-item-del { display: flex; }
+    .mb-resize-handle {
+      position: absolute;
+      bottom: -4px;
+      right: -4px;
+      width: 12px;
+      height: 12px;
+      background: var(--ink);
+      cursor: se-resize;
+      display: none;
+    }
+    .mb-item.selected .mb-resize-handle { display: block; }
+
     /* ── LIGHTBOX ── */
     .lightbox {
       display: none;
@@ -342,12 +532,17 @@
 <body>
 
   <header>
-    <a href="#" class="logo">oggetti <em>curati</em></a>
+    <a href="#" class="logo" onclick="switchPage('gallery');return false;">oggetti <em>curati</em></a>
     <div class="header-right">
+      <div class="nav-tabs">
+        <button class="nav-tab active" onclick="switchPage('gallery')">Collection</button>
+        <button class="nav-tab" onclick="switchPage('moodboard')">Moodboard</button>
+      </div>
       <span id="item-count"></span>
     </div>
   </header>
 
+  <div id="page-gallery" class="page active">
   <section class="hero">
     <h1>A <em>collection</em><br>of beautiful<br>things</h1>
     <p>Furniture &amp; objects — curated over time</p>
@@ -366,6 +561,29 @@
       </div>
     </div>
   </div>
+
+  </div><!-- end page-gallery -->
+
+  <!-- MOODBOARD PAGE -->
+  <div id="page-moodboard" class="page">
+    <div class="mb-wrap">
+      <div class="mb-sidebar">
+        <p class="mb-sidebar-title">Room</p>
+        <div class="mb-room-grid" id="mb-rooms"></div>
+        <p class="mb-sidebar-title">Your pieces</p>
+        <div class="mb-pieces-list" id="mb-pieces-list"></div>
+      </div>
+      <div class="mb-canvas-wrap">
+        <div class="mb-canvas-actions">
+          <button class="mb-btn" onclick="clearCanvas()">Clear all</button>
+          <button class="mb-btn primary" onclick="saveScreenshot()">Save as image ↓</button>
+        </div>
+        <div id="mb-canvas">
+          <div class="mb-canvas-hint" id="mb-hint">Drag pieces from the left onto your room</div>
+        </div>
+      </div>
+    </div>
+  </div><!-- end page-moodboard -->
 
   <footer>
     <span>oggetti curati</span>
@@ -388,6 +606,7 @@
     </div>
   </div>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
   <script>
     const GIST_URL = 'https://gist.githubusercontent.com/FrancescaComi/f89d70fd6303df8369daf06f6942a8cc/raw/furniture.json';
     const CACHE_BUST = '?t=' + Math.floor(Date.now() / 60000);
@@ -497,6 +716,168 @@
       if (!str) return '';
       return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
+
+    // ── PAGE SWITCHING ──
+    function switchPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+      document.querySelectorAll('.nav-tab')[page === 'gallery' ? 0 : 1].classList.add('active');
+      if (page === 'moodboard') buildMoodboard();
+    }
+    window.switchPage = switchPage;
+
+    // ── MOODBOARD ──
+    const ROOMS = [
+      { id: 'living', label: 'Living room', bg: '#f0ece4' },
+      { id: 'bedroom', label: 'Bedroom', bg: '#e8e4dc' },
+      { id: 'kitchen', label: 'Kitchen', bg: '#e4e8e0' },
+      { id: 'office', label: 'Office', bg: '#e4e0e8' },
+      { id: 'dining', label: 'Dining', bg: '#ece8e0' },
+      { id: 'bathroom', label: 'Bathroom', bg: '#e0e8e8' },
+    ];
+
+    let activeRoom = 'living';
+    let selectedItem = null;
+
+    function buildMoodboard() {
+      // rooms
+      const roomGrid = document.getElementById('mb-rooms');
+      roomGrid.innerHTML = ROOMS.map(r => `
+        <button class="mb-room-btn${r.id === activeRoom ? ' active' : ''}" onclick="setRoom('${r.id}')">${r.label}</button>
+      `).join('');
+      setRoom(activeRoom, false);
+
+      // pieces list
+      const list = document.getElementById('mb-pieces-list');
+      list.innerHTML = allItems.map((item, i) => `
+        <div class="mb-piece-thumb" draggable="true" data-index="${i}"
+          ondragstart="onDragStart(event,${i})">
+          <img src="${escHtml(item.url)}" alt="${escHtml(item.title)}" onerror="this.style.display='none'"/>
+          <span>${escHtml(item.title)}</span>
+        </div>
+      `).join('');
+    }
+
+    function setRoom(id, rebuild = true) {
+      activeRoom = id;
+      const room = ROOMS.find(r => r.id === id);
+      document.getElementById('mb-canvas').style.background = room ? room.bg : '#f0ece4';
+      if (rebuild) {
+        document.querySelectorAll('.mb-room-btn').forEach((b, i) => {
+          b.classList.toggle('active', ROOMS[i].id === id);
+        });
+      }
+    }
+    window.setRoom = setRoom;
+
+    // drag from sidebar
+    let dragIndex = null;
+    function onDragStart(e, index) {
+      dragIndex = index;
+      e.dataTransfer.effectAllowed = 'copy';
+    }
+    window.onDragStart = onDragStart;
+
+    const canvas = document.getElementById('mb-canvas');
+    canvas.addEventListener('dragover', e => { e.preventDefault(); e.dataTransfer.dropEffect = 'copy'; });
+    canvas.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragIndex === null) return;
+      const item = allItems[dragIndex];
+      if (!item) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      addItemToCanvas(item, x, y);
+      dragIndex = null;
+      document.getElementById('mb-hint').style.display = 'none';
+    });
+
+    function addItemToCanvas(item, cx, cy) {
+      const el = document.createElement('div');
+      el.className = 'mb-item';
+      const size = 160;
+      el.style.cssText = `width:${size}px;height:${size}px;left:${cx - size/2}px;top:${cy - size/2}px;`;
+
+      el.innerHTML = `
+        <img src="${escHtml(item.url)}" alt="${escHtml(item.title)}" draggable="false"/>
+        <button class="mb-item-del" onclick="this.parentNode.remove();deselectAll()">✕</button>
+        <div class="mb-resize-handle"></div>
+      `;
+
+      // select on click
+      el.addEventListener('mousedown', e => {
+        if (e.target.classList.contains('mb-item-del') || e.target.classList.contains('mb-resize-handle')) return;
+        deselectAll();
+        el.classList.add('selected');
+        selectedItem = el;
+        startDragItem(e, el);
+      });
+
+      // resize
+      const handle = el.querySelector('.mb-resize-handle');
+      handle.addEventListener('mousedown', e => {
+        e.stopPropagation();
+        const startX = e.clientX, startY = e.clientY;
+        const startW = el.offsetWidth, startH = el.offsetHeight;
+        function onMove(e) {
+          const w = Math.max(60, startW + e.clientX - startX);
+          const h = Math.max(60, startH + e.clientY - startY);
+          el.style.width = w + 'px';
+          el.style.height = h + 'px';
+        }
+        function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+        document.addEventListener('mousemove', onMove);
+        document.addEventListener('mouseup', onUp);
+      });
+
+      canvas.appendChild(el);
+    }
+
+    function startDragItem(e, el) {
+      const rect = canvas.getBoundingClientRect();
+      const startX = e.clientX - el.offsetLeft;
+      const startY = e.clientY - el.offsetTop;
+      function onMove(e) {
+        const x = Math.max(0, Math.min(canvas.offsetWidth - el.offsetWidth, e.clientX - startX));
+        const y = Math.max(0, Math.min(canvas.offsetHeight - el.offsetHeight, e.clientY - startY));
+        el.style.left = x + 'px';
+        el.style.top = y + 'px';
+      }
+      function onUp() { document.removeEventListener('mousemove', onMove); document.removeEventListener('mouseup', onUp); }
+      document.addEventListener('mousemove', onMove);
+      document.addEventListener('mouseup', onUp);
+    }
+
+    document.addEventListener('mousedown', e => {
+      if (!e.target.closest('.mb-item')) deselectAll();
+    });
+
+    function deselectAll() {
+      document.querySelectorAll('.mb-item').forEach(el => el.classList.remove('selected'));
+      selectedItem = null;
+    }
+
+    function clearCanvas() {
+      document.querySelectorAll('#mb-canvas .mb-item').forEach(el => el.remove());
+      document.getElementById('mb-hint').style.display = '';
+    }
+    window.clearCanvas = clearCanvas;
+
+    async function saveScreenshot() {
+      // Use html2canvas if available, otherwise prompt
+      if (typeof html2canvas !== 'undefined') {
+        const cvs = await html2canvas(canvas, { useCORS: true, scale: 2 });
+        const a = document.createElement('a');
+        a.download = 'moodboard.png';
+        a.href = cvs.toDataURL();
+        a.click();
+      } else {
+        alert('To save: right-click on the moodboard and choose "Save image as", or take a screenshot.');
+      }
+    }
+    window.saveScreenshot = saveScreenshot;
 
     loadData();
   </script>
