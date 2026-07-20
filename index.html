@@ -63,8 +63,9 @@
     .lb-btn { font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 20px; border: 0.5px solid var(--border); background: transparent; color: var(--ink-muted); text-decoration: none; cursor: pointer; transition: all 0.18s; }
     .lb-btn:hover, .lb-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
     .lb-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--paper); font-size: 24px; cursor: pointer; line-height: 1; padding: 4px 8px; font-weight: 300; }
-    .lightbox-comments { padding: 1.75rem 2rem 2rem; border-top: 0.5px solid var(--border); }
-    .lightbox-comments-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; }
+    .site-comments { padding: 0 3rem 3.5rem; max-width: 520px; }
+    .site-comments-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; }
+    @media (max-width: 900px) { .site-comments { padding-left: 1.5rem; padding-right: 1.5rem; } }
   </style>
   
 <!-- Google tag (gtag.js) -->
@@ -89,6 +90,11 @@
     <h1>A <em>collection</em><br>of beautiful<br>things</h1>
     <p>Furniture &amp; objects — curated over time</p>
   </section>
+
+  <div class="site-comments">
+    <div class="site-comments-label">Questions &amp; comments</div>
+    <div id="cusdis_thread"></div>
+  </div>
 
   <div class="divider"></div>
 
@@ -121,10 +127,6 @@
           <button class="lb-btn" onclick="document.getElementById('lightbox').classList.remove('open')">Close</button>
         </div>
       </div>
-      <div class="lightbox-comments">
-        <div class="lightbox-comments-label">Questions &amp; comments</div>
-        <div id="cusdis_thread"></div>
-      </div>
     </div>
   </div>
 
@@ -137,23 +139,13 @@
     const CUSDIS_APP_ID = 'e5560180-5607-4d62-bdbe-becd30455d99';
     const CUSDIS_HOST = 'https://cusdis.com';
 
-    function hashId(str) {
-      let hash = 0;
-      for (let i = 0; i < str.length; i++) {
-        hash = ((hash << 5) - hash) + str.charCodeAt(i);
-        hash |= 0;
-      }
-      return 'item-' + Math.abs(hash);
-    }
-
-    function renderComments(item) {
+    function renderSiteComments() {
       const el = document.getElementById('cusdis_thread');
-      const pageId = hashId(item.url);
       el.setAttribute('data-host', CUSDIS_HOST);
       el.setAttribute('data-app-id', CUSDIS_APP_ID);
-      el.setAttribute('data-page-id', pageId);
-      el.setAttribute('data-page-url', location.href.split('#')[0] + '#' + pageId);
-      el.setAttribute('data-page-title', item.title);
+      el.setAttribute('data-page-id', 'site-questions');
+      el.setAttribute('data-page-url', location.href.split('#')[0]);
+      el.setAttribute('data-page-title', 'my mother calls me popi');
       const tryRender = () => {
         if (window.CUSDIS && window.CUSDIS.renderTo) {
           window.CUSDIS.renderTo(el);
@@ -163,6 +155,7 @@
       };
       tryRender();
     }
+    renderSiteComments();
     // ---------------------------------
 
     async function loadData() {
@@ -221,7 +214,6 @@
       const link = document.getElementById('lb-link');
       if (item.link) { link.href = item.link; link.style.display = ''; } else { link.style.display = 'none'; }
       document.getElementById('lightbox').classList.add('open');
-      renderComments(item);
     }
 
     document.getElementById('lightbox').addEventListener('click', function(e) { if (e.target===this) this.classList.remove('open'); });
@@ -233,7 +225,6 @@
     loadData();
   </script>
 
-  <script>window.CUSDIS_PREVENT_INITIAL_RENDER = true;</script>
   <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
 </body>
 </html>
