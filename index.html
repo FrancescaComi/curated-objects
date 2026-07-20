@@ -63,8 +63,11 @@
     .lb-btn { font-family: var(--sans); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 9px 20px; border: 0.5px solid var(--border); background: transparent; color: var(--ink-muted); text-decoration: none; cursor: pointer; transition: all 0.18s; }
     .lb-btn:hover, .lb-btn.primary { background: var(--ink); color: var(--paper); border-color: var(--ink); }
     .lb-close { position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none; color: var(--paper); font-size: 24px; cursor: pointer; line-height: 1; padding: 4px 8px; font-weight: 300; }
-    .site-comments { padding: 0 3rem 3.5rem; max-width: 520px; }
+    .site-comments { padding: 3.5rem 3rem 4rem; max-width: 520px; border-top: 0.5px solid var(--border); }
     .site-comments-label { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 1rem; }
+    .site-comments-contact { font-size: 13px; color: var(--ink-muted); margin-bottom: 1.75rem; line-height: 1.6; }
+    .site-comments-contact a { color: var(--ink); text-decoration: none; border-bottom: 0.5px solid var(--ink-faint); transition: color 0.15s, border-color 0.15s; }
+    .site-comments-contact a:hover { border-color: var(--ink); }
     @media (max-width: 900px) { .site-comments { padding-left: 1.5rem; padding-right: 1.5rem; } }
   </style>
   
@@ -91,11 +94,6 @@
     <p>Furniture &amp; objects — curated over time</p>
   </section>
 
-  <div class="site-comments">
-    <div class="site-comments-label">Questions &amp; comments</div>
-    <div id="cusdis_thread"></div>
-  </div>
-
   <div class="divider"></div>
 
   <div class="filter-bar" id="filter-bar">
@@ -108,6 +106,12 @@
         <p class="state-title">Loading your collection…</p>
       </div>
     </div>
+  </div>
+
+  <div class="site-comments">
+    <div class="site-comments-label">Questions &amp; comments</div>
+    <p class="site-comments-contact">For anything else, find me on Instagram <a href="https://www.instagram.com/francescacomi" target="_blank">@francescacomi</a></p>
+    <div id="cusdis_thread"></div>
   </div>
 
   <footer>
